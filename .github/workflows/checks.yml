@@ -4,9 +4,10 @@ on:
   merge_group:
   push:
     branches: [main]
+
 jobs:
   lint-checks:
-    name: Check Code Formatting
+    name: Check ESLint and Format
     timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
@@ -20,6 +21,7 @@ jobs:
         run: pnpm install
       - name: Build and lint
         run: pnpm lint
+
   type-checks:
     name: Check Type
     timeout-minutes: 10
@@ -33,5 +35,7 @@ jobs:
           cache: pnpm
       - name: Install dependencies
         run: pnpm install
+      - name: Generate prisma types
+        run: pnpm generate:prisma
       - name: Run Type Checks
         run: pnpm typecheck
